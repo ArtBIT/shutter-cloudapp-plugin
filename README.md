@@ -5,7 +5,7 @@ Shutter Upload Plugin for CloudApp
 
 ##Installation
 
-Download `CloudApp.pm` and extract it to Shutter upload plugins directory. On Ubuntu, thats:
+Download `CloudApp.pm` and extract it to Shutter upload plugins directory. On Ubuntu, that's:
 ```
 /usr/share/shutter/resources/system/upload_plugins/upload/
 ```
