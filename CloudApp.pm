@@ -104,7 +104,7 @@ sub upload {
     );
 
     # Debug responses
-    $ua->add_handler( response_header => sub { my($response, $ua, $h) = @_; print " Response: " . Dumper($response) . "\n"; }, owner => 'myreshandler');
+    # $ua->add_handler( response_header => sub { my($response, $ua, $h) = @_; print " Response: " . Dumper($response) . "\n"; }, owner => 'myreshandler');
 
     # if username/password are provided
     if ( $username ne "" && $password ne "" ) {
