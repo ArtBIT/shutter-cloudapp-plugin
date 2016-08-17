@@ -20,11 +20,11 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #
 ###################################################
- 
+
 package CloudApp;
- 
+
 use lib $ENV{'SHUTTER_ROOT'}.'/share/shutter/resources/modules';
- 
+
 use utf8;
 use strict;
 use POSIX qw/setlocale/;
@@ -53,61 +53,61 @@ my %upload_plugin_info = (
 
 binmode( STDOUT, ":utf8" );
 if ( exists $upload_plugin_info{$ARGV[ 0 ]} ) {
-	print $upload_plugin_info{$ARGV[ 0 ]};
-	exit;
+    print $upload_plugin_info{$ARGV[ 0 ]};
+    exit;
 }
 
 
 #don't touch this
 sub new {
-	my $class = shift;
+    my $class = shift;
 
-	#call constructor of super class (host, debug_cparam, shutter_root, gettext_object, main_gtk_window, ua)
-	my $self = $class->SUPER::new( shift, shift, shift, shift, shift, shift );
+    #call constructor of super class (host, debug_cparam, shutter_root, gettext_object, main_gtk_window, ua)
+    my $self = $class->SUPER::new( shift, shift, shift, shift, shift, shift );
 
-	bless $self, $class;
-	return $self;
+    bless $self, $class;
+    return $self;
 }
 
-#load some custom modules here (or do other custom stuff)	
+#load some custom modules here (or do other custom stuff)    
 sub init {
     my $self = shift;
- 
+
     use JSON;                   #example1
     use LWP::UserAgent;         #example2
     use HTTP::Request::Common;  #example3
-     
+
     return TRUE;    
 }
 
 #handle 
 sub upload {
-	my ( $self, $upload_filename, $username, $password ) = @_;
+    my ( $self, $upload_filename, $username, $password ) = @_;
 
-	$self->{_filename} = $upload_filename;
-	$self->{_username} = $username;
-	$self->{_password} = $password;
+    $self->{_filename} = $upload_filename;
+    $self->{_username} = $username;
+    $self->{_password} = $password;
 
-	utf8::encode $upload_filename;
-	utf8::encode $password;
-	utf8::encode $username;
+    utf8::encode $upload_filename;
+    utf8::encode $password;
+    utf8::encode $username;
 
     # Digest auth realm
     my $realm = 'Application';
 
-	my $json_coder = JSON::XS->new->allow_nonref;
+    my $json_coder = JSON::XS->new->allow_nonref;
 
-	my $ua = LWP::UserAgent->new(
-		'timeout'    => 20,
-		'keep_alive' => 10,
-		'env_proxy'  => 1,
-	);
+    my $ua = LWP::UserAgent->new(
+        'timeout'    => 20,
+        'keep_alive' => 10,
+        'env_proxy'  => 1,
+    );
 
     # Debug responses
     $ua->add_handler( response_header => sub { my($response, $ua, $h) = @_; print " Response: " . Dumper($response) . "\n"; }, owner => 'myreshandler');
 
-	# if username/password are provided
-	if ( $username ne "" && $password ne "" ) {
+    # if username/password are provided
+    if ( $username ne "" && $password ne "" ) {
         eval {
             $ua->credentials("my.cl.ly:443", $realm, $username, $password);
 
@@ -116,17 +116,17 @@ sub upload {
             #  1. making an initial request to CloudApp, retrieving a few parameters,
             #  2. Passing those parameters along with the file itself to S3
             #  3. Pinging back the CloudApp servers, informing them that the upload is done
- 
+
             # 1. Request to upload
             my $name = basename($upload_filename);
-			my @params = (
-				'https://my.cl.ly/v3/items',
+            my @params = (
+                'https://my.cl.ly/v3/items',
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
-				'Content' => $json_coder->encode([ name => $name ]),
-			);
-			my $req1 = HTTP::Request::Common::POST(@params);
-			my $rsp1 = $ua->request($req1);
+                'Content' => $json_coder->encode([ name => $name ]),
+            );
+            my $req1 = HTTP::Request::Common::POST(@params);
+            my $rsp1 = $ua->request($req1);
             if ($rsp1->is_success) {
                 my $content = $rsp1->decoded_content;
                 $content =~ s/Infinity/"Infinity"/g;
@@ -184,9 +184,9 @@ sub upload {
         if($self->{_links}{'status'} == 999){
             return %{ $self->{_links} };
         }
-         
+
     }
-     
+
     #and return links
     return %{ $self->{_links} };
 }
