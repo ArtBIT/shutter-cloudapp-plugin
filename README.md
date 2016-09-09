@@ -5,9 +5,13 @@ Shutter Upload Plugin for CloudApp
 
 ##Installation
 
-Download `CloudApp.pm` and extract it to Shutter upload plugins directory. On Ubuntu, that's:
+Download `CloudApp.pm` and move it to the Shutter upload plugins directory, and make it executable.
+On Ubuntu, that's:
 ```
-/usr/share/shutter/resources/system/upload_plugins/upload/
+cd /usr/share/shutter/resources/system/upload_plugins/upload
+sudo mv ~/Downloads/CloudApp.pm .
+sudo chown root:root CloudApp.pm
+sudo chmod a+x CloudApp.pm
 ```
 
 Restart Shutter. You can force plugin reinitialization by clearing the cache, like so:
