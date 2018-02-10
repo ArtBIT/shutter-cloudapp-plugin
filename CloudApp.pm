@@ -167,6 +167,7 @@ sub upload {
                     my $rsp3 = $ua->request($req3);
                     if ($rsp3->is_success) {
                         my $content3 = decode_json($rsp3->decoded_content);
+                        $self->{_links}->{'short_link'} = $content3->{'share_url'};
                         $self->{_links}->{'direct_link'} = $content3->{'content_url'};
                     }
                     $self->{_links}{'status'} = $rsp3->status_line;
