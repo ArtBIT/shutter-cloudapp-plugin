@@ -3,7 +3,7 @@ Shutter Upload Plugin for CloudApp
 
 [Shutter](http://shutter-project.org/) is an awesome screenshot tool for Linux.  [CloudApp](http://getcloudapp.com) is an awesome screenshot sharing tool, but it lacks a Linux client.  This plugin tries to solve that problem.
 
-##Installation
+## Installation
 
 Download `CloudApp.pm` and move it to the Shutter upload plugins directory, and make it executable.
 On Ubuntu, that's:
