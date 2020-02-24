@@ -5,6 +5,12 @@ Shutter Upload Plugin for CloudApp
 
 ## Installation
 
+Check if you have the following **dependencies**:
+```
+perl-tie-ixhash
+perl-lwp-protocol-https
+```
+
 Download `CloudApp.pm` and move it to the Shutter upload plugins directory, and make it executable.
 On Ubuntu, that's:
 ```
